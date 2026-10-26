@@ -1,0 +1,18 @@
+# Dataset files (Large and not mine to redistribute)
+data/*.csv
+data/*.zip
+data/*.xlsx
+
+# Secrets
+.env
+*.env
+
+# Operating system and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs and temporary files
+*.log
+*.tmp
