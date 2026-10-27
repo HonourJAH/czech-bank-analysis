@@ -1,7 +1,11 @@
 -- 01_load_raw.sql
 -- Purpose: load the five Bank Dataset CSVs exactly as they appear in the files.
 -- Builds:  database bank_analysis, with tables account_raw, branch_raw, customer_raw,
---          loan_raw and transaction_raw (all columns text, no transformations)
+--          loan_raw and transaction_raw (all data columns text, no transformations)
+-- Adds:    row_no, an AUTO_INCREMENT column that records each row's position in its file.
+--          It is load metadata, not data. The files are three stacked batches whose IDs
+--          restart at 1 (see docs/decision-log.md), and row_no is the only way to tell
+--          the batches apart.
 -- Note:    never UPDATE or DELETE on these tables after loading.
 --          Column names keep the source file's spelling, including the typos
 --          TRANSCATION_* in the transaction file; staging corrects them.
@@ -20,6 +24,7 @@ USE bank_analysis;
 -- Accounts
 DROP TABLE IF EXISTS account_raw;
 CREATE TABLE account_raw (
+    row_no            INT AUTO_INCREMENT PRIMARY KEY,
     ACCOUNT_ID        VARCHAR(50),
     CUSTOMER_ID       VARCHAR(50),
     BRANCH_ID         VARCHAR(50),
@@ -34,11 +39,13 @@ INTO TABLE account_raw
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-IGNORE 1 LINES;
+IGNORE 1 LINES
+(ACCOUNT_ID, CUSTOMER_ID, BRANCH_ID, OPENING_BALANCE, ACCOUNT_OPEN_DATE, ACCOUNT_TYPE, ACCOUNT_STATUS);
 
 -- Branches
 DROP TABLE IF EXISTS branch_raw;
 CREATE TABLE branch_raw (
+    row_no       INT AUTO_INCREMENT PRIMARY KEY,
     BRANCH_ID    VARCHAR(50),
     BRANCH_NAME  VARCHAR(200),
     BRANCH_STATE VARCHAR(100)
@@ -49,11 +56,13 @@ INTO TABLE branch_raw
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-IGNORE 1 LINES;
+IGNORE 1 LINES
+(BRANCH_ID, BRANCH_NAME, BRANCH_STATE);
 
 -- Customers
 DROP TABLE IF EXISTS customer_raw;
 CREATE TABLE customer_raw (
+    row_no       INT AUTO_INCREMENT PRIMARY KEY,
     CUSTOMER_ID  VARCHAR(50),
     First_Name   VARCHAR(200),
     Last_Name    VARCHAR(200),
@@ -68,11 +77,13 @@ INTO TABLE customer_raw
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-IGNORE 1 LINES;
+IGNORE 1 LINES
+(CUSTOMER_ID, First_Name, Last_Name, City, Phone_Number, Occupation, DOB);
 
 -- Loans
 DROP TABLE IF EXISTS loan_raw;
 CREATE TABLE loan_raw (
+    row_no      INT AUTO_INCREMENT PRIMARY KEY,
     LOAN_ID     VARCHAR(50),
     CUSTOMER_ID VARCHAR(50),
     BRANCH_ID   VARCHAR(50),
@@ -84,11 +95,13 @@ INTO TABLE loan_raw
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-IGNORE 1 LINES;
+IGNORE 1 LINES
+(LOAN_ID, CUSTOMER_ID, BRANCH_ID, LOAN_AMOUNT);
 
 -- Transactions (the source file and its columns are spelled "Transacation" / "TRANSCATION")
 DROP TABLE IF EXISTS transaction_raw;
 CREATE TABLE transaction_raw (
+    row_no             INT AUTO_INCREMENT PRIMARY KEY,
     TRANSCATION_ID     VARCHAR(50),
     ACCOUNT_ID         VARCHAR(50),
     TRANSCATION_DATE   VARCHAR(50),
@@ -102,4 +115,5 @@ INTO TABLE transaction_raw
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-IGNORE 1 LINES;
+IGNORE 1 LINES
+(TRANSCATION_ID, ACCOUNT_ID, TRANSCATION_DATE, TRANSCATION_MEDIA, TRANSCATION_TYPE, TRANSCATION_AMOUNT);
