@@ -1,13 +1,13 @@
 # Data
 
-This project uses the Bank Dataset from Kaggle: five CSV files (accounts, branches, customers, loans, transactions).
+This project uses the Berka dataset (PKDD'99 Financial Dataset): real, anonymised data from a Czech bank,
+1993 to 1998, in eight files (account, card, client, disp, district, loan, order, trans).
 
-Source: https://www.kaggle.com/datasets/salikhussaini49/bank-dataset
+Source: the PKDD'99 Discovery Challenge data, also described at
+https://relational.fel.cvut.cz/dataset/Financial
 
-The CSVs are not included in this repository. To reproduce the project:
+The `.asc` files are not included in this repository. To reproduce the project:
 
-1. Download the dataset from the link above.
-2. Save the five files in this folder.
+1. Download the original files (see the source above).
+2. Save the eight `.asc` files in this folder.
 3. Run the scripts in `/sql` in numbered order.
-
-Note: the data appears to be synthetic (generated), not taken from a real bank.
