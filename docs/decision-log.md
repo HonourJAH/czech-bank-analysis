@@ -121,3 +121,11 @@ description. Check the glossary against the source before relying on a meaning.
   124 for one account.
 - An overdrawn account is a legitimate state, not a data error.
 - Decision: keep all rows; `balance` is stored as a signed decimal in staging.
+
+## 12. Loan figures
+
+- For all 682 loans, `payments x duration` equals `amount` exactly (zero loans differ, largest gap 0.00).
+  The monthly payment is the amount divided by the number of months, with no interest included.
+- Consequence: `payments` carries no information beyond amount and duration, and the table has no interest or
+  total-repaid figure. The analysis makes no claims about the cost of a loan or the bank's income on loans.
+- Decision: keep all loans; `payments` is kept in staging but not used as an independent measure.
