@@ -129,3 +129,10 @@ description. Check the glossary against the source before relying on a meaning.
 - Consequence: `payments` carries no information beyond amount and duration, and the table has no interest or
   total-repaid figure. The analysis makes no claims about the cost of a loan or the bank's income on loans.
 - Decision: keep all loans; `payments` is kept in staging but not used as an independent measure.
+
+## 13. Duplicate transactions
+
+- Every trans_id is unique, but a transaction could have been recorded twice under two IDs. Grouping on all
+  columns except trans_id finds exactly one repeated group: two zero-amount interest credits on account 9051 on
+  1998-02-28 with the same balance (1,367.10). One extra row in 1,056,320; it changes no total.
+- Decision: keep both rows. The evidence that the second is an error is circumstantial and the amount is 0.
