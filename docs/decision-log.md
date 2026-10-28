@@ -151,3 +151,19 @@ description. Check the glossary against the source before relying on a meaning.
   Not fully explained.
 - Decision: balance-based analysis relies on the balance column as recorded and avoids recomputing balances
   from amounts. Interest credits are examined separately.
+
+## 15. Interest credits that do not move the balance by exactly their amount
+
+- Of 18,770 unambiguous interest credits (blank operation, alone on their day), 3,933 (21%) do not raise the
+  balance by exactly their amount. Their balance change is between 94.1% and 112.5% of the amount, averaging
+  100.0% (an average change of 152.18 against an average amount of 152.21).
+- No systematic deduction (such as a withheld tax) is visible: it would show as a ratio clearly below 1. The
+  gap is small and runs in both directions. The cause is not stated in the data.
+- Decision: keep all rows. Amounts are used as recorded; balances are used as recorded and not recomputed.
+
+## Profiling summary
+
+IDs unique and all references resolve; blanks are expected "not applicable" values (plus the district-69
+placeholders); numeric columns, dates and date order are clean; coded values are consistent; no hidden
+duplicate transactions; amounts and balances are mutually consistent on unambiguous rows. Nothing needs
+removing from the data: all cleaning is conversion and decoding, done in staging.
