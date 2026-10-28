@@ -73,3 +73,19 @@ description. Check the glossary against the source before relying on a meaning.
 
 - 0 transactions, 0 loans and 0 cards are dated before their account was opened.
 - Decision: no sequence problems.
+
+## 8. Coded values
+
+- Every coded column has a short, clean list of values with no typos or duplicate spellings, and each column's
+  counts add up to its table's row count. Values: account.frequency (POPLATEK MESICNE 4,167, POPLATEK TYDNE 240,
+  POPLATEK PO OBRATU 93), card.type (classic, junior, gold), disp.type (OWNER 4,500, DISPONENT 869),
+  loan.status (A 203, B 31, C 403, D 45), trans.type (VYDAJ, PRIJEM, VYBER), trans.operation (five values plus
+  blank) and the k_symbol codes in trans and order.
+- Loan status: A and C (no problems) total 606 and B and D (not paid or in debt) total 76, matching the counts
+  published for the dataset.
+- trans.type has a third value, VYBER (16,666 rows), alongside PRIJEM and VYDAJ. These rows are cash
+  withdrawals with no partner bank or account.
+- The "no value" form of k_symbol appears in two ways: a true empty string and a single space. The single
+  space occurs only in outgoing transfers (52,817 rows) and cash withdrawals (616 rows), and both forms span
+  the whole period (1993 to 1998), so there is no evidence they differ in meaning.
+- Decision: trim k_symbol, then treat both forms as NULL ("no payment purpose recorded").
