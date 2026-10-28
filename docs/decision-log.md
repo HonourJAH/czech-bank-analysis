@@ -167,3 +167,19 @@ IDs unique and all references resolve; blanks are expected "not applicable" valu
 placeholders); numeric columns, dates and date order are clean; coded values are consistent; no hidden
 duplicate transactions; amounts and balances are mutually consistent on unambiguous rows. Nothing needs
 removing from the data: all cleaning is conversion and decoding, done in staging.
+
+## 16. Staging (sql/03_build_staging.sql)
+
+- Staging converts and decodes only; no rows are removed. Every staging table has the same row count as its raw
+  table, and recomputing blank counts, decoded values and totals from raw gives identical figures
+  (`sql/04_profile_staging.sql`; transaction amounts total 6,257,793,560.30 in both).
+- Conversions: IDs to integers, amounts and balances to DECIMAL(12,2), YYMMDD text to DATE (1993 to 1998),
+  blanks and single spaces to NULL, "?" in the district table to NULL, client birth_number to birth_date and
+  gender, district columns A1 to A16 renamed from the dataset description.
+- Czech codes are decoded to English labels, and the original code is kept in a neighbouring column.
+
+## 17. No separate clean layer
+
+- Profiling found nothing to exclude: IDs are unique, every reference resolves, and the unusual values are
+  legitimate (not-applicable blanks, overdrafts, zero-amount interest postings).
+- Decision: the staging tables are the analysis layer. A derived table is built only where a question needs one.
