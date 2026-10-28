@@ -89,3 +89,16 @@ description. Check the glossary against the source before relying on a meaning.
   space occurs only in outgoing transfers (52,817 rows) and cash withdrawals (616 rows), and both forms span
   the whole period (1993 to 1998), so there is no evidence they differ in meaning.
 - Decision: trim k_symbol, then treat both forms as NULL ("no payment purpose recorded").
+
+## 9. Client birth numbers
+
+- `birth_number` packs date of birth and gender into six digits (YYMMDD); for women 50 is added to the month.
+- All 5,369 values are well formed and decode to real dates. The split is 2,645 female and 2,724 male
+  (49.3% and 50.7%), which supports the month rule.
+- The two-digit year has no century. Birth years decode as 19YY: the oldest client was born 1911-08-20, so no
+  year falls in the 00 to 10 range that would be ambiguous.
+- Decision: decode to `birth_date` and `gender` in staging and drop the raw field.
+- Age: measured on 1998-12-31, 72 clients (1.3%) are under 18, of whom 57 are account owners and 15 are
+  authorised users. Kept: the data has a junior card type, so minors holding accounts looks like a feature of
+  the bank, not an error. Age-based analyses use age at the relevant date, not age at the end of the data.
+- Each of the 4,500 accounts has exactly one OWNER disposition (4,500 owners, 869 other authorised users).
