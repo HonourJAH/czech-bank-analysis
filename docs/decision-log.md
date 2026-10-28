@@ -113,3 +113,11 @@ description. Check the glossary against the source before relying on a meaning.
   (SANKC. UROK) and 4 interest credits (UROK). The cause is not stated in the data; rounding of a very small
   interest amount is a plausible explanation, not a confirmed one.
 - Decision: keep all 14. They add nothing to any total. Analyses that count transactions filter on amount > 0.
+
+## 11. Negative balances
+
+- 2,999 transactions (0.28% of rows) show a negative balance, down to -41,125.70. They come from 288 of the
+  4,500 accounts (6.4%), averaging 10.4 negative-balance transactions per overdrawn account, with a maximum of
+  124 for one account.
+- An overdrawn account is a legitimate state, not a data error.
+- Decision: keep all rows; `balance` is stored as a signed decimal in staging.
