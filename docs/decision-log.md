@@ -102,3 +102,14 @@ description. Check the glossary against the source before relying on a meaning.
   authorised users. Kept: the data has a junior card type, so minors holding accounts looks like a feature of
   the bank, not an error. Age-based analyses use age at the relevant date, not age at the end of the data.
 - Each of the 4,500 accounts has exactly one OWNER disposition (4,500 owners, 869 other authorised users).
+
+## 10. Amounts
+
+- No amount is negative in any table: transaction amounts are positive, and the direction is held in `type`
+  (PRIJEM credit, VYDAJ debit).
+- Ranges: trans.amount 0 to 87,400; loan.amount 4,980 to 590,820; loan.payments 304 to 9,910; loan.duration
+  12 to 60 months; order.amount 1 to 14,882. No zero or negative loan or order values.
+- 14 transactions (0.001%) have an amount of exactly 0. All are interest postings: 10 penalty-interest debits
+  (SANKC. UROK) and 4 interest credits (UROK). The cause is not stated in the data; rounding of a very small
+  interest amount is a plausible explanation, not a confirmed one.
+- Decision: keep all 14. They add nothing to any total. Analyses that count transactions filter on amount > 0.
