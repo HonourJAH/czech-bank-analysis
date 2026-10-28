@@ -136,3 +136,18 @@ description. Check the glossary against the source before relying on a meaning.
   columns except trans_id finds exactly one repeated group: two zero-amount interest credits on account 9051 on
   1998-02-28 with the same balance (1,367.10). One extra row in 1,056,320; it changes no total.
 - Decision: keep both rows. The evidence that the second is an error is circumstantial and the amount is 0.
+
+## 14. Balance versus amount
+
+- Comparing each transaction's balance change with its amount confirms the sign convention: PRIJEM raises the
+  balance and VYDAJ lowers it; type VYBER (16,666 rows) is a debit (all 9,597 unambiguous rows lowered the balance).
+- On unambiguous transactions (alone on their day, preceded by one alone on its day; 406,941 rows, 39% of all)
+  98.7% follow their amount. Most failures are interest credits (3,933 of 18,770, 21%) and outgoing
+  transfers (1,097 of 104,891, 1.0%).
+- The file has no timestamps, so the order of transactions within one day is not reliable. An early test
+  that ordered same-day rows by trans_id wrongly failed about half of cash withdrawals.
+- An account-level reconciliation (credits minus debits equal to the closing balance) holds for only 641 of
+  4,500 accounts. Likely cause: the mismatch rate is small per transaction but each account has hundreds.
+  Not fully explained.
+- Decision: balance-based analysis relies on the balance column as recorded and avoids recomputing balances
+  from amounts. Interest credits are examined separately.
