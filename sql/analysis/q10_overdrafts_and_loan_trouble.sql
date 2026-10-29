@@ -33,6 +33,7 @@ SELECT
 FROM loan_stg
 GROUP BY status_before_loan;
 
+
 -- The three groups side by side: never overdrawn, first overdrawn after the loan, overdrawn before the loan
 SELECT
     CASE
