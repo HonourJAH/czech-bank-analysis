@@ -44,6 +44,7 @@ The full evidence behind each decision is in `docs/decision-log.md`.
 | 10 | Amounts and balances agree on 98.7% of transactions whose order is certain; the file has no timestamps, so same-day order is unreliable | Use recorded balances; do not recompute them |
 
 ## Key findings
+Full write-ups for each question are in [`docs/findings.md`](docs/findings.md).
 
 1. **Growth.** 4,500 accounts were opened in waves, peaking at 1,363 in 1996 (30.3%), and none after 29 December 1997. About 235 transactions per account.
 2. **Money flow.** Customers deposited more than they withdrew in every year (a net inflow of about 197.2M), but the share of incoming money that stayed fell from 8.2% in 1996 to 2.8% in 1998. In 1998, with no new accounts, transactions still rose 13.3%.
